@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Name Updater</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <h1>Shop Name Updater</h1>
+
+    <form id="shopForm">
+        <label for="shopId">Shop ID:</label>
+        <input type="text" id="shopId" name="shopId" required>
+
+        <label for="newShopName">New Shop Name:</label>
+        <input type="text" id="newShopName" name="newShopName" required>
+
+        <button type="button" id="updateBtn">Update Shop Name</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        $(document).ready(function () {
+            $("#updateBtn").click(function () {
+                var shopId = $("#shopId").val();
+                var newShopName = $("#newShopName").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "update_shop.php", 
+                    data: { id: shopId, shop_name: newShopName },
+                    dataType: "json",
+                    success: function (response) {
+                        $("#result").html(response.message);
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
